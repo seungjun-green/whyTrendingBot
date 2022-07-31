@@ -1,4 +1,13 @@
-with open("/Users/seungjunlee/Downloads/GetMarketDataKeys.txt") as f:
+file_url = ""
+
+from settings import production
+
+if production:
+    file_url = ""
+else:
+    file_url = "/Users/seungjunlee/Downloads/GetMarketDataKeys.txt"
+
+with open(file_url) as f:
     for i in range(5):
         lines = f.readline().split("=")
         if i == 0:

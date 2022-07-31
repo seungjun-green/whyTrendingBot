@@ -11,7 +11,6 @@ auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
 auth.set_access_token(keys.oa_key, keys.oa_secret)
 api = twitter.API(auth)
 
-
 def get_replies():
     replies = []
     if record["reply"]["firstTime"]:
@@ -37,6 +36,10 @@ def get_replies():
 def reply(result, curr_id):
     api.update_status(status=result, in_reply_to_status_id=curr_id, auto_populate_reply_metadata=True)
     print("reply-tweeted! \n")
+
+def get_top_tweets(hashtag):
+    result = api.search_tweets(q=hashtag,tweet_mode='extended', count=15)
+    return result
 
 
 def construct_conv_order(tw_id):
@@ -72,8 +75,3 @@ def construct_conv_order(tw_id):
     print(order)
     print("-------end of the order-------\n")
     return order
-
-
-def get_top_tweets(hashtag):
-    result = api.search_tweets(q=hashtag,tweet_mode='extended', count=15)
-    return result

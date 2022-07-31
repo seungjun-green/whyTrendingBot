@@ -5,8 +5,8 @@ from nltk.tokenize import word_tokenize, sent_tokenize
 
 # why this is trending
 def why_trending(hashtag):
-    raw_data = Twitter.get_top_tweets(hashtag)
-    cleaned_data = process_data(raw_data)
+    # raw_data = Twitter.get_top_tweets(hashtag)
+    # cleaned_data = process_data(raw_data)
     cleaned_data = settings.d
     final_data = extract_summary(cleaned_data)
     top_id = find_top(final_data, cleaned_data)
@@ -29,7 +29,7 @@ def find_top(final_data, cleaned_data):
     return final_result[0]['tweet_id']
 
 def extract_summary(data):
-    N = [ 'stop', 'the', 'to', 'and', 'a', 'in', 'it', 'is', 'I', 'that', 'had', 'on', 'for', 'were', 'was']
+    N = [ 'stop', 'the', 'to', 'and', 'a', 'in', 'it', 'is', 'I', 'that', 'had', 'on', 'for', 'were', 'was', ',', ':', '@', '#', '(', ')']
     stopwords = set(N)
 
     words = []
@@ -63,14 +63,19 @@ def extract_summary(data):
     print(f"Totoal number of sentences: {len(sentences)}")
     print(sentences)
 
+
+    highest_freq = sorted(freqTable.items(), key=lambda item: item[1], reverse=True)[0][1]
+    print(sorted(freqTable.items(), key=lambda item: item[1], reverse=True))
+    print(f"HIGHEST: {highest_freq}")
+    # sort the freq table
     scoreboard=dict()
     for sentence in sentences:
         for word, freq in freqTable.items():
             if word in word_tokenize(sentence):
                 if sentence in scoreboard:
-                    scoreboard[sentence] += freq
+                    scoreboard[sentence] += freq/highest_freq
                 else:
-                    scoreboard[sentence] = freq
+                    scoreboard[sentence] = freq/highest_freq
 
     return scoreboard
 
@@ -94,6 +99,8 @@ def process_data(data):
 
         processed_text = re.sub(r'RT', "", raw_text)
         processed_text = re.sub(r'@\w+:', "", processed_text)
+        processed_text = re.sub(r'@:', "", processed_text)
+        processed_text = re.sub(r'@', "", processed_text)
         processed_text = re.sub(r'https://t.co/\w+', "", processed_text)
         processed_text = re.sub(r'#\w+', "", processed_text)
         processed_text = re.sub(r'#', "", processed_text)

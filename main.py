@@ -2,6 +2,8 @@ import Twitter
 import time
 import Brain
 import re
+import settings
+
 
 if __name__ == '__main__':
     while True:
@@ -17,7 +19,8 @@ if __name__ == '__main__':
                 else:
                     result = "Please provide a hashtag"
                 print(result)
-                #Twitter.reply(result, curr_id)
+                if settings.production:
+                    Twitter.reply(result, curr_id)
                 if i == 0:
                     Twitter.record["reply"]["lastReplied_id"] = mention[0]
         except:

@@ -1,13 +1,16 @@
-import re
-import Twitter
-import settings
 from nltk.tokenize import word_tokenize, sent_tokenize
+import re
+import settings
+import Twitter
 
 # why this is trending
 def why_trending(hashtag):
-    # raw_data = Twitter.get_top_tweets(hashtag)
-    # cleaned_data = process_data(raw_data)
-    cleaned_data = settings.d
+    if settings.production:
+        raw_data = Twitter.get_top_tweets(hashtag)
+        cleaned_data = process_data(raw_data)
+    else:
+        cleaned_data = settings.example_data
+
     final_data = extract_summary(cleaned_data)
     top_id = find_top(final_data, cleaned_data)
     print(top_id)

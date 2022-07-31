@@ -1,7 +1,8 @@
 user_id = 'whyTrendingBot'
+production = False
 
 
-d = [{'tweet_id': 1553073648793276421, 'text': 'Hand Painted Oil Painting On Canvas,Mountains ,', 'score': 0},
+example_data = [{'tweet_id': 1553073648793276421, 'text': 'Hand Painted Oil Painting On Canvas,Mountains ,', 'score': 0},
 {'tweet_id': 1553073498855133184, 'text': 'Initial game functions -MVP', 'score': 0},
 {'tweet_id': 1553072802835603457, 'text': 'More descriptive error messages / error logging', 'score': 0},
 {'tweet_id': 1553072744840933376, 'text': "Breakage on oh-my-posh due to removal of config setting 'n Proto", 'score': 0},

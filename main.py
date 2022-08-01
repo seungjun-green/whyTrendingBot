@@ -1,16 +1,16 @@
 import Twitter
+import time
 import Brain
 import re
 import settings
-import keys
-import tweepy as twitter
+
 
 if __name__ == '__main__':
-    class IDPrinter(twitter.StreamingClient):
-        def on_tweet(self, tweet):
-            print(f"new tweet: {tweet.text}")
-            curr_id = tweet.id
-            try:
+    while True:
+        try:
+            mentions = Twitter.get_replies()
+            for i, mention in enumerate(mentions):
+                curr_id = mention[0]
                 text = Twitter.construct_conv_order(curr_id)
                 if re.search(r'#\w+', text):
                     hashtag = re.match(r'#\w+', text).group(0)
@@ -21,9 +21,10 @@ if __name__ == '__main__':
                 print(result)
                 if settings.production:
                     Twitter.reply(result, curr_id)
-            except:
-                print("Unknown error happened")
+                if i == 0:
+                    Twitter.record["reply"]["lastReplied_id"] = mention[0]
+        except:
+            Twitter.record["reply"]["firstTime"] = True
+            print("unknown error happened")
 
-    printer = IDPrinter(keys.bearer_token)
-    print(printer.get_rules())
-    printer.filter()
+        time.sleep(15)

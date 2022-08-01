@@ -19,4 +19,4 @@ with open(file_url) as f:
         if i==3:
             oa_secret = lines[1].replace("\n", "").replace(" ","")
         if i==4:
-            weather_key = lines[1].replace("\n", "").replace(" ","")
+            bearer_token = lines[1].replace("\n", "").replace(" ","")

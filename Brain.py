@@ -15,7 +15,7 @@ def why_trending(hashtag):
     final_data = extract_summary(cleaned_data)
     top_id = find_top(final_data, cleaned_data)
     print(top_id)
-    return f"This is the tweet that might represent what people are talking about {hashtag} at this moment:\nhttps://twitter.com/twitter/status/{top_id}"
+    return f"This tweet might represent what people are talking about '{hashtag}' at this moment:\nhttps://twitter.com/twitter/status/{top_id}"
 
 def find_top(final_data, cleaned_data):
     count = 0

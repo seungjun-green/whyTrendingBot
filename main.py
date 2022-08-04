@@ -37,19 +37,12 @@ class IDPrinter(twitter.StreamingClient):
             pass
 
 
-#
-# if __name__ == '__main__':
-#     printer = IDPrinter(keys.bearer_token)
-#
-#     while True:
-#         try:
-#             printer.filter()
-#         except:
-#             continue
 
+if __name__ == '__main__':
+    printer = IDPrinter(keys.bearer_token)
 
-first_text = "Hello(James) My !@#$%^&*()diet is A-10"
-curr_text = re.sub(r'[^(A-Za-z0-9 )]', '', first_text)
-curr_text = re.sub(r'\(', '', curr_text)
-curr_text = re.sub(r'\)', '', curr_text)
-print(curr_text)
+    while True:
+        try:
+            printer.filter()
+        except:
+            continue

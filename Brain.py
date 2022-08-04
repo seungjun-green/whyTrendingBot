@@ -18,20 +18,26 @@ def why_trending(hashtag):
     return f"This is the tweet that might represent what people are talking about {hashtag} at this moment:\nhttps://twitter.com/twitter/status/{top_id}"
 
 def find_top(final_data, cleaned_data):
+    count = 0
     for row in cleaned_data:
         for sentence in sent_tokenize(row['text']):
             if sentence in final_data:
                 row['score'] += final_data[sentence]
+                count+=1
             else:
-                print("This means this sentence is a usless")
+                print("This means this sentence is a useless")
                 print(f"**{sentence}**")
                 pass
+
+        row['score'] = row['score'] / count
+        count = 0
 
     final_result = sorted(cleaned_data, key=lambda i: i['score'], reverse=True)
 
     print("\n Last result: ")
     print(final_result)
     print("\n")
+
     return final_result[0]['tweet_id']
 
 def extract_summary(data):
@@ -81,11 +87,6 @@ def extract_summary(data):
                 else:
                     scoreboard[sentence] = freq/highest_freq
 
-
-    print("Final Data:")
-    print(scoreboard)
-    print("\n")
-
     return scoreboard
 
 def get_textOnly(data):
@@ -121,8 +122,5 @@ def process_data(data):
 
         scoreboard.append(curr)
 
-    print("Cleaned Data:")
-    print(scoreboard)
-    print("\n")
 
     return scoreboard

@@ -23,7 +23,7 @@ def find_top(final_data, cleaned_data):
             if sentence in final_data:
                 row['score'] += final_data[sentence]
             else:
-                print("This part is impossible to be happened")
+                print("This means this sentence is a usless")
                 print(f"**{sentence}**")
                 pass
 
@@ -36,7 +36,6 @@ def find_top(final_data, cleaned_data):
 
 def extract_summary(data):
     words = []
-
 
     for row in data:
         curr_text = re.sub(r'[^(A-Za-z0-9 )]', '', row['text'])

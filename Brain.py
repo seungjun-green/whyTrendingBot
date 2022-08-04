@@ -2,8 +2,9 @@ from nltk.tokenize import word_tokenize, sent_tokenize
 import re
 import settings
 import Twitter
+from nltk.corpus import stopwords
+stop_words = stopwords.words('english') # why this is trending
 
-# why this is trending
 def why_trending(hashtag):
     if settings.production:
         raw_data = Twitter.get_top_tweets(hashtag)
@@ -14,7 +15,7 @@ def why_trending(hashtag):
     final_data = extract_summary(cleaned_data)
     top_id = find_top(final_data, cleaned_data)
     print(top_id)
-    return f"This is the tweet that might represent what people are talking about the hashtag you provided at this moment:\nhttps://twitter.com/twitter/status/{top_id}"
+    return f"This is the tweet that might represent what people are talking about {hashtag} at this moment:\nhttps://twitter.com/twitter/status/{top_id}"
 
 def find_top(final_data, cleaned_data):
     for row in cleaned_data:
@@ -27,25 +28,28 @@ def find_top(final_data, cleaned_data):
                 pass
 
     final_result = sorted(cleaned_data, key=lambda i: i['score'], reverse=True)
+
     print("\n Last result: ")
     print(final_result)
+    print("\n")
     return final_result[0]['tweet_id']
 
 def extract_summary(data):
-    N = [ 'stop', 'the', 'to', 'and', 'a', 'in', 'it', 'is', 'I', 'that', 'had', 'on', 'for', 'were', 'was', ',', ':', '@', '#', '(', ')']
-    stopwords = set(N)
-
     words = []
 
+
     for row in data:
-        curr = word_tokenize(row['text'])
+        curr_text = re.sub(r'[^(A-Za-z0-9 )]', '', row['text'])
+        curr_text = re.sub(r'\(', '', curr_text)
+        curr_text = re.sub(r'\)', '', curr_text)
+        curr = word_tokenize(curr_text)
         words += curr
 
     # creating freqTable for every word in the given text, except stop words
     freqTable = dict()
     for word in words:
         word = word.lower()
-        if word in stopwords:
+        if word in stop_words:
             pass
         elif word in freqTable:
             freqTable[word] += 1
@@ -64,8 +68,6 @@ def extract_summary(data):
         sentences += curr
 
     print(f"Totoal number of sentences: {len(sentences)}")
-    print(sentences)
-
 
     highest_freq = sorted(freqTable.items(), key=lambda item: item[1], reverse=True)[0][1]
     print(sorted(freqTable.items(), key=lambda item: item[1], reverse=True))
@@ -79,6 +81,11 @@ def extract_summary(data):
                     scoreboard[sentence] += freq/highest_freq
                 else:
                     scoreboard[sentence] = freq/highest_freq
+
+
+    print("Final Data:")
+    print(scoreboard)
+    print("\n")
 
     return scoreboard
 
@@ -112,8 +119,11 @@ def process_data(data):
         processed_text = re.sub(r'\[Feature]', "", processed_text)
         curr['text'] = processed_text.strip()
         curr['score'] = 0
-        print(curr)
 
         scoreboard.append(curr)
+
+    print("Cleaned Data:")
+    print(scoreboard)
+    print("\n")
 
     return scoreboard

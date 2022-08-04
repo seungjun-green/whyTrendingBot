@@ -11,34 +11,13 @@ auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
 auth.set_access_token(keys.oa_key, keys.oa_secret)
 api = twitter.API(auth)
 
-def get_replies():
-    replies = []
-    if record["reply"]["firstTime"]:
-        try:
-            rd = api.search_tweets(settings.user_id, count=1)
-            print(f"reply-first Time: {len(rd)}")
-            for dot in rd:
-                replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
-            record["reply"]["firstTime"] = False
-        except twitter.errors.TweepyException as e:
-            print(f"[get_replies] (First time) Twitter Error: {e}\n")
-    else:
-        try:
-            rd = api.search_tweets(settings.user_id, since_id=record["reply"]["lastReplied_id"])
-            if (len(rd) > 0):
-                print(f"reply-second Time: {len(rd)}")
-            for dot in rd:
-                replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
-        except twitter.errors.TweepyException as e:
-            print(f"[get_replies] (Second time) Twitter Error: {e}\n")
-    return replies
 
 def reply(result, curr_id):
     api.update_status(status=result, in_reply_to_status_id=curr_id, auto_populate_reply_metadata=True)
     print("reply-tweeted! \n")
 
 def get_top_tweets(hashtag):
-    result = api.search_tweets(q=hashtag,tweet_mode='extended', count=15)
+    result = api.search_tweets(q=hashtag,tweet_mode='extended',lang = "en" ,count=15)
     return result
 
 

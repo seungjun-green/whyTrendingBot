@@ -21,12 +21,13 @@ class IDPrinter(twitter.StreamingClient):
         if isOringal:
             try:
                 text = Twitter.construct_conv_order(curr_id)
-                if re.search(r'#\w+', text):
-                    hashtag = re.match(r'#\w+', text).group(0)
-                    print(f"The given hashtag is {hashtag}")
-                    result = Brain.why_trending(hashtag)
+                text = re.sub(r'@\w+', '', text, count=1)
+                if len(text) > 0:
+                    given_word = text.split()[0]
+                    print(f"The given word is {given_word}")
+                    result = Brain.why_trending(given_word)
                 else:
-                    result = "Please provide a hashtag"
+                    result = "Please provide a word"
                 print(result)
                 if settings.production:
                     Twitter.reply(result, curr_id)
@@ -36,12 +37,19 @@ class IDPrinter(twitter.StreamingClient):
             pass
 
 
+#
+# if __name__ == '__main__':
+#     printer = IDPrinter(keys.bearer_token)
+#
+#     while True:
+#         try:
+#             printer.filter()
+#         except:
+#             continue
 
-if __name__ == '__main__':
-    printer = IDPrinter(keys.bearer_token)
 
-    while True:
-        try:
-            printer.filter()
-        except:
-            continue
+first_text = "Hello(James) My !@#$%^&*()diet is A-10"
+curr_text = re.sub(r'[^(A-Za-z0-9 )]', '', first_text)
+curr_text = re.sub(r'\(', '', curr_text)
+curr_text = re.sub(r'\)', '', curr_text)
+print(curr_text)

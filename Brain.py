@@ -14,8 +14,9 @@ def why_trending(hashtag):
 
         cleaned_data = process_data(raw_data)
     else:
-        cleaned_data = settings.example_data
-
+        cleaned_data = settings.example_data2
+        for row in cleaned_data:
+            print(row)
 
 
     final_data = extract_summary(cleaned_data)
@@ -35,7 +36,9 @@ def find_top(final_data, cleaned_data):
                 print(f"**{sentence}**")
                 pass
 
-        row['score'] = row['score'] / count
+        if count > 0:
+            row['score'] = row['score'] / count
+
         count = 0
 
     final_result = sorted(cleaned_data, key=lambda i: i['score'], reverse=True)
@@ -49,12 +52,18 @@ def find_top(final_data, cleaned_data):
 def extract_summary(data):
     words = []
 
+
+    seen_text = set()
     for row in data:
         curr_text = re.sub(r'[^(A-Za-z0-9 )]', '', row['text'])
         curr_text = re.sub(r'\(', '', curr_text)
         curr_text = re.sub(r'\)', '', curr_text)
-        curr = word_tokenize(curr_text)
-        words += curr
+        if curr_text not in seen_text:
+            curr = word_tokenize(curr_text)
+            words += curr
+            seen_text.add(curr_text)
+        else:
+            pass
 
     # creating freqTable for every word in the given text, except stop words
     freqTable = dict()
@@ -128,5 +137,9 @@ def process_data(data):
 
         scoreboard.append(curr)
 
+
+    print("cleaned_data: ")
+    print(scoreboard)
+    print("\n\n")
 
     return scoreboard

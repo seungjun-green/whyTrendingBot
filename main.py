@@ -55,19 +55,4 @@ class IDPrinter(twitter.StreamingClient):
 #         except:
 #             continue
 
-# text = "@WhyTrendingBot Shopify"
-# text = re.sub(r'@\w+', '', text)
-# text = text.lstrip()
-# print(text)
-
-
-'''
-
-filtering unrpoper given word
-
-Given word is a special character
-Given word is a lengthy sentences
-'''
-hashtag = 'United States is so great and jsdlijh'
-result = api.search_tweets(q=hashtag,tweet_mode='extended',lang = "en" ,count=15)
-print(result)
+print(Brain.why_trending('Ar'))

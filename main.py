@@ -21,16 +21,24 @@ class IDPrinter(twitter.StreamingClient):
         if isOringal:
             try:
                 text = Twitter.construct_conv_order(curr_id)
-                text = re.sub(r'@\w+', '', text, count=1)
+                text = re.sub(r'@\w+', '', text)
                 if len(text) > 0:
-                    given_word = text.split()[0]
+                    given_word = text.lstrip()
                     print(f"The given word is {given_word}")
                     result = Brain.why_trending(given_word)
+
+                    if result == "Unavailable":
+                        result = "Please provide a proper word or hashtag"
                 else:
-                    result = "Please provide a word"
+                    result = "Please provide a proper word or hashtag"
+
                 print(result)
+
                 if settings.production:
                     Twitter.reply(result, curr_id)
+                else:
+                    print("tweeted - Development mode")
+
             except:
                 print("Unknown error happened")
         else:
@@ -38,11 +46,28 @@ class IDPrinter(twitter.StreamingClient):
 
 
 
-if __name__ == '__main__':
-    printer = IDPrinter(keys.bearer_token)
+# if __name__ == '__main__':
+#     printer = IDPrinter(keys.bearer_token)
+#
+#     while True:
+#         try:
+#             printer.filter()
+#         except:
+#             continue
 
-    while True:
-        try:
-            printer.filter()
-        except:
-            continue
+# text = "@WhyTrendingBot Shopify"
+# text = re.sub(r'@\w+', '', text)
+# text = text.lstrip()
+# print(text)
+
+
+'''
+
+filtering unrpoper given word
+
+Given word is a special character
+Given word is a lengthy sentences
+'''
+hashtag = 'United States is so great and jsdlijh'
+result = api.search_tweets(q=hashtag,tweet_mode='extended',lang = "en" ,count=15)
+print(result)

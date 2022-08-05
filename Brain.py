@@ -36,7 +36,7 @@ def find_top(final_data, cleaned_data):
                 print(f"**{sentence}**")
                 pass
 
-        if count > 0:
+        if count > 1:
             row['score'] = row['score'] / count
 
         count = 0

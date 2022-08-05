@@ -88,6 +88,8 @@ def extract_summary(data):
         sentences += curr
 
     print(f"Totoal number of sentences: {len(sentences)}")
+    print(sentences)
+    print("\n\n")
 
     highest_freq = sorted(freqTable.items(), key=lambda item: item[1], reverse=True)[0][1]
     print(sorted(freqTable.items(), key=lambda item: item[1], reverse=True))
@@ -96,11 +98,22 @@ def extract_summary(data):
     scoreboard=dict()
     for sentence in sentences:
         for word, freq in freqTable.items():
-            if word in word_tokenize(sentence):
+            curr_text = re.sub(r'[^(A-Za-z0-9 )]', '', sentence)
+            curr_text = re.sub(r'\(', '', curr_text)
+            curr_text = re.sub(r'\)', '', curr_text)
+            if word in word_tokenize(curr_text.lower()):
                 if sentence in scoreboard:
                     scoreboard[sentence] += freq/highest_freq
                 else:
                     scoreboard[sentence] = freq/highest_freq
+
+
+
+
+    print("final data: ")
+    print(len(scoreboard))
+    print(scoreboard)
+    print("\n\n")
 
     return scoreboard
 
@@ -136,7 +149,6 @@ def process_data(data):
         curr['score'] = 0
 
         scoreboard.append(curr)
-
 
     print("cleaned_data: ")
     print(scoreboard)

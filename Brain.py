@@ -59,7 +59,7 @@ def extract_summary(data):
         curr_text = re.sub(r'\(', '', curr_text)
         curr_text = re.sub(r'\)', '', curr_text)
         if curr_text not in seen_text:
-            curr = word_tokenize(curr_text)
+            curr = word_tokenize(curr_text.lower())
             words += curr
             seen_text.add(curr_text)
         else:
@@ -68,7 +68,6 @@ def extract_summary(data):
     # creating freqTable for every word in the given text, except stop words
     freqTable = dict()
     for word in words:
-        word = word.lower()
         if word in stop_words:
             pass
         elif word in freqTable:
@@ -85,10 +84,21 @@ def extract_summary(data):
     sentences = []
     for row in data:
         curr = sent_tokenize(row['text'])
-        sentences += curr
 
-    print(f"Totoal number of sentences: {len(sentences)}")
+        for sub_curr in curr:
+            if sub_curr not in sentences:
+                sentences += curr
+            else:
+                print("나왔다")
+
+
+
+    print(f"Total number of sentences: {len(sentences)}, {len(seen_text)}")
+    print("===========")
     print(sentences)
+    print("===========")
+    print(seen_text)
+    print("===========")
     print("\n\n")
 
     highest_freq = sorted(freqTable.items(), key=lambda item: item[1], reverse=True)[0][1]

@@ -5,19 +5,21 @@ import Twitter
 from nltk.corpus import stopwords
 stop_words = stopwords.words('english') # why this is trending
 
+
+
 def why_trending(hashtag):
-    if settings.production:
+    if settings.production and settings.use_example:
+        cleaned_data = settings.example_data3
+    else:
         raw_data = Twitter.get_top_tweets(hashtag)
 
         if len(raw_data) == 0:
             return "Unavailable"
 
         cleaned_data = process_data(raw_data, hashtag)
-    else:
-        cleaned_data = settings.example_data3
+
         for row in cleaned_data:
             print(row)
-
 
     final_data = extract_summary(cleaned_data, hashtag)
     top_id = find_top(final_data, cleaned_data)
@@ -83,7 +85,7 @@ def extract_summary(data, hashtag):
             if sub_curr not in sentences:
                 sentences += curr
             else:
-                print("나왔다")
+                pass
 
 
 
@@ -100,13 +102,19 @@ def extract_summary(data, hashtag):
     print(f"HIGHEST: {highest_freq}")
     # sort the freq table
     scoreboard=dict()
+
+    ds = hashtag.split()
+    dddd = []
+    for d in ds:
+        dddd.append(d.lower())
+
     for sentence in sentences:
         for word, freq in freqTable.items():
             curr_text = re.sub(r'[^(A-Za-z0-9 )]', '', sentence)
             curr_text = re.sub(r'\(', '', curr_text)
             curr_text = re.sub(r'\)', '', curr_text)
             if word in word_tokenize(curr_text.lower()):
-                if freq > 1 and word.lower() != hashtag.lower():
+                if freq > 1 and word.lower() not in dddd:
                     if sentence in scoreboard:
                         scoreboard[sentence] += freq/highest_freq
                     else:

@@ -35,8 +35,7 @@ class IDPrinter(twitter.StreamingClient):
                 print(result)
 
                 if settings.production:
-                   # Twitter.reply(result, curr_id)
-                    print("dd")
+                    Twitter.reply(result, curr_id)
                 else:
                     print("tweeted - Development mode")
 
@@ -57,29 +56,7 @@ if __name__ == '__main__':
             except:
                 continue
     else:
-        print(Brain.why_trending('Elon'))
+        print(Brain.why_trending('iPhone 14'))
 
 
 
-
-
-
-
-#
-# import spacy
-# import numpy as np
-# # Load the spacy model that you have installed
-# class Master:
-#     nlp = spacy.load('en_core_web_md')
-# # process a sentence using the model
-# print("---")
-# doc1 = Master.nlp("Rocket")
-# doc2 = Master.nlp("Launch")
-# # It's that simple - all of the vectors and words are assigned after this point
-# # Get the vector for 'text':
-#
-# from sklearn.metrics.pairwise import cosine_similarity,cosine_distances
-# A=np.array(doc1[0].vector)
-# B=np.array(doc2[0].vector)
-# result=cosine_similarity(A.reshape(1,-1),B.reshape(1,-1))
-# print(result)

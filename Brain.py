@@ -12,34 +12,29 @@ def why_trending(hashtag):
         if len(raw_data) == 0:
             return "Unavailable"
 
-        cleaned_data = process_data(raw_data)
+        cleaned_data = process_data(raw_data, hashtag)
     else:
-        cleaned_data = settings.example_data2
+        cleaned_data = settings.example_data3
         for row in cleaned_data:
             print(row)
 
 
-    final_data = extract_summary(cleaned_data)
+    final_data = extract_summary(cleaned_data, hashtag)
     top_id = find_top(final_data, cleaned_data)
     print(top_id)
     return f"This tweet might represent what people are talking about '{hashtag}' at this moment:\nhttps://twitter.com/twitter/status/{top_id}"
 
 def find_top(final_data, cleaned_data):
-    count = 0
+    highest_score=-1
+
     for row in cleaned_data:
         for sentence in sent_tokenize(row['text']):
             if sentence in final_data:
                 row['score'] += final_data[sentence]
-                count+=1
             else:
                 print("This means this sentence is a useless")
                 print(f"**{sentence}**")
                 pass
-
-        if count > 1:
-            row['score'] = row['score'] / count
-
-        count = 0
 
     final_result = sorted(cleaned_data, key=lambda i: i['score'], reverse=True)
 
@@ -49,9 +44,8 @@ def find_top(final_data, cleaned_data):
 
     return final_result[0]['tweet_id']
 
-def extract_summary(data):
+def extract_summary(data, hashtag):
     words = []
-
 
     seen_text = set()
     for row in data:
@@ -112,11 +106,11 @@ def extract_summary(data):
             curr_text = re.sub(r'\(', '', curr_text)
             curr_text = re.sub(r'\)', '', curr_text)
             if word in word_tokenize(curr_text.lower()):
-                if sentence in scoreboard:
-                    scoreboard[sentence] += freq/highest_freq
-                else:
-                    scoreboard[sentence] = freq/highest_freq
-
+                if freq > 1 and word.lower() != hashtag.lower():
+                    if sentence in scoreboard:
+                        scoreboard[sentence] += freq/highest_freq
+                    else:
+                        scoreboard[sentence] = freq/highest_freq
 
 
 
@@ -133,7 +127,7 @@ def get_textOnly(data):
         text.append(row['text'])
     return text
 
-def process_data(data):
+def process_data(data, hashtag):
     scoreboard = []
 
     for i in range(0, len(data)):
@@ -145,8 +139,10 @@ def process_data(data):
         else:
             raw_text = curr_raw['full_text']
 
+
         processed_text = re.sub(r'RT', "", raw_text)
         processed_text = re.sub(r'@\w+:', "", processed_text)
+        processed_text = re.sub(r'@\w+', "", processed_text)
         processed_text = re.sub(r'@:', "", processed_text)
         processed_text = re.sub(r'@', "", processed_text)
         processed_text = re.sub(r'https://t.co/\w+', "", processed_text)

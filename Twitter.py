@@ -17,7 +17,7 @@ def reply(result, curr_id):
     print("reply-tweeted! \n")
 
 def get_top_tweets(hashtag):
-    result = api.search_tweets(q=hashtag,tweet_mode='extended',lang = "en" ,count=15)
+    result = api.search_tweets(q=hashtag,tweet_mode='extended',lang = "en" ,count=100)
     return result
 
 

@@ -5,8 +5,6 @@ import Twitter
 from nltk.corpus import stopwords
 stop_words = stopwords.words('english') # why this is trending
 
-
-
 def why_trending(hashtag):
     if settings.production == False and settings.use_example:
         cleaned_data = settings.example_data3
@@ -27,8 +25,6 @@ def why_trending(hashtag):
     return f"This tweet might represent what people are talking about '{hashtag}' at this moment:\nhttps://twitter.com/twitter/status/{top_id}"
 
 def find_top(final_data, cleaned_data):
-    highest_score=-1
-
     for row in cleaned_data:
         for sentence in sent_tokenize(row['text']):
             if sentence in final_data:
@@ -40,9 +36,7 @@ def find_top(final_data, cleaned_data):
 
     final_result = sorted(cleaned_data, key=lambda i: i['score'], reverse=True)
 
-    print("\n Last result: ")
-    print(final_result)
-    print("\n")
+    print(f"Last result: \n {final_result}")
 
     return final_result[0]['tweet_id']
 
@@ -71,9 +65,7 @@ def extract_summary(data, hashtag):
         else:
             freqTable[word] = 1
 
-    print(f"Total number of words: {len(words)}")
-    print(words)
-
+    print(f"Total number of words: {len(words)} \n {words}")
     print(f"The freqTable: \n {freqTable}" )
 
     # creating a dictionary to keep the score of each sentence
@@ -87,19 +79,8 @@ def extract_summary(data, hashtag):
             else:
                 pass
 
-
-
-    print(f"Total number of sentences: {len(sentences)}, {len(seen_text)}")
-    print("===========")
-    print(sentences)
-    print("===========")
-    print(seen_text)
-    print("===========")
-    print("\n\n")
-
     highest_freq = sorted(freqTable.items(), key=lambda item: item[1], reverse=True)[0][1]
-    print(sorted(freqTable.items(), key=lambda item: item[1], reverse=True))
-    print(f"HIGHEST: {highest_freq}")
+
     # sort the freq table
     scoreboard=dict()
 
@@ -122,9 +103,7 @@ def extract_summary(data, hashtag):
 
 
 
-    print("final data: ")
-    print(len(scoreboard))
-    print(scoreboard)
+    print(f"final data: \n {scoreboard}")
     print("\n\n")
 
     return scoreboard

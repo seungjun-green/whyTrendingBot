@@ -56,7 +56,15 @@ if __name__ == '__main__':
             except:
                 continue
     else:
+
         print(Brain.why_trending('iPhone 14'))
 
 
+'''
+production mode
+- use real data
 
+debugging mode
+- using example data
+- use real data
+'''

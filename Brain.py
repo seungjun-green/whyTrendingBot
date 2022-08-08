@@ -8,7 +8,7 @@ stop_words = stopwords.words('english') # why this is trending
 
 
 def why_trending(hashtag):
-    if settings.production and settings.use_example:
+    if settings.production == False and settings.use_example:
         cleaned_data = settings.example_data3
     else:
         raw_data = Twitter.get_top_tweets(hashtag)

@@ -3,7 +3,10 @@
 
 ## Problem Statement
 
-Sometimes it's hard to know why certain topic is trending. Every time yous scroll you found out every one talking about different thing about the topic. At that moment, you can use @whytrendingBit to know instantly what people are talking about the topic. 
+
+
+
+You go to the 'Trends for you' and tap a word to know why this topic is trending. But sometimes it's hard to know why it is trending. Every time you scroll the feed you found out every one talking about different thing about the topic. At that moment, you can use @whytrendingBit to know instantly what people are talking about the topic. 
 
 ## Introducing  [whyTrendingBot](https://twitter.com/whytrendingbot)
 

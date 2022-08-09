@@ -18,6 +18,6 @@
 
 ## Future plans and improvements
 
+* Multiple Language support
 
-
-
+Rather than showing an English tweet always, make the bot reply with a tweet written in the same language as the word the user used.

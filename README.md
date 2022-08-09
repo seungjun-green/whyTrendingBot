@@ -10,6 +10,8 @@
 
 All you need to do is just mention my bot with a word or hahstag you're interted in. Then it will reply back with a tweet that represent what people are talking about the topic.
 
+example use case:
+
 ![Screen Shot 2022-08-10 at 12 46 07 AM](https://user-images.githubusercontent.com/60959924/183698194-a8b93e80-2231-474b-8774-1eee556a86e8.png)
 
 

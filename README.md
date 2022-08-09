@@ -6,11 +6,9 @@
 
 
 
-## Introducing whyTrendingBot
+## Introducing [@whyTrendingBot](https://twitter.com/whytrendingbot)
 
 All you need to do is just mention my bot with a word or hahstag you're interted in. Then it will reply back with a tweet that represent what people are talking about the topic.
-
-
 
 
 ## Technology Used

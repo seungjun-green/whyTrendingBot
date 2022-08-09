@@ -3,8 +3,7 @@
 
 ## Problem Statement
 
-
-
+Sometimes it's hard to know why certain topic is trending. Every time yous croll you found out every one talking about different thing about the topic. At that moment, you can use @whytrendingBit to know instantly what people are talking about the topic. 
 
 ## Introducing  [whyTrendingBot](https://twitter.com/whytrendingbot)
 

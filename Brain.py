@@ -16,11 +16,19 @@ def why_trending(hashtag):
 
         cleaned_data = process_data(raw_data, hashtag)
 
-        for row in cleaned_data:
-            print(row)
+        # for row in cleaned_data:
+        #     print(row)
+
 
     final_data = extract_summary(cleaned_data, hashtag)
+
+    print("-" * 10)
+
+
     top_id = find_top(final_data, cleaned_data)
+
+    print("-" * 10)
+
     print(top_id)
     return f"This tweet might represent what people are talking about '{hashtag}' at this moment:\nhttps://twitter.com/twitter/status/{top_id}"
 
@@ -51,6 +59,7 @@ def extract_summary(data, hashtag):
     words = []
 
     seen_text = set()
+
     for row in data:
         curr_text = re.sub(r'[^(A-Za-z0-9 )]', '', row['text'])
         curr_text = re.sub(r'\(', '', curr_text)

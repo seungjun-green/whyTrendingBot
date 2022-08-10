@@ -20,7 +20,7 @@ def why_trending(hashtag):
         # for row in cleaned_data:
         #     print(row)
 
-    print("not getting final data")
+    print("now getting final data")
     final_data = extract_summary(cleaned_data, hashtag)
     print("we got the final data")
     print("-" * 10)
@@ -59,7 +59,7 @@ def extract_summary(data, hashtag):
     words = []
 
     seen_text = set()
-
+    print("District1")
     for row in data:
         curr_text = re.sub(r'[^(A-Za-z0-9 )]', '', row['text'])
         curr_text = re.sub(r'\(', '', curr_text)
@@ -70,7 +70,7 @@ def extract_summary(data, hashtag):
             seen_text.add(curr_text)
         else:
             pass
-
+    print("District2")
     # creating freqTable for every word in the given text, except stop words
     freqTable = dict()
     for word in words:
@@ -81,10 +81,12 @@ def extract_summary(data, hashtag):
         else:
             freqTable[word] = 1
 
+    print("District3")
     print(f"Total number of words: {len(words)} \n {words}")
     print(f"The freqTable: \n {sorted(freqTable.items(), key=lambda item: item[1], reverse=True)}" )
 
     # creating a dictionary to keep the score of each sentence
+    print("District4")
     sentences = []
     for row in data:
         curr = sent_tokenize(row['text'])
@@ -99,12 +101,13 @@ def extract_summary(data, hashtag):
 
     # sort the freq table
     scoreboard=dict()
-
+    print("District5")
     ds = hashtag.split()
     dddd = []
     for d in ds:
         dddd.append(d.lower())
 
+    print("District6")
     for sentence in sentences:
         for word, freq in freqTable.items():
             curr_text = re.sub(r'[^(A-Za-z0-9 )]', '', sentence)
@@ -117,8 +120,7 @@ def extract_summary(data, hashtag):
                     else:
                         scoreboard[sentence] = freq/highest_freq
 
-
-
+    print("District7")
     print(f"final data: \n {scoreboard}")
     print("\n\n")
 

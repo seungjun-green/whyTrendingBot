@@ -1,6 +1,5 @@
 user_id = 'whyTrendingBot'
-production = False
-
+production = True
 use_example = False
 
 example_data = [{'tweet_id': 1553073648793276421, 'text': 'Hand Painted Oil Painting On Canvas,Mountains ,', 'score': 0},

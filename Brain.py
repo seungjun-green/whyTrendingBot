@@ -9,24 +9,24 @@ def why_trending(hashtag):
     if settings.production == False and settings.use_example:
         cleaned_data = settings.example_data4
     else:
+        print("getting raw data")
         raw_data = Twitter.get_top_tweets(hashtag)
-
+        print("Got the raw data")
         if len(raw_data) == 0:
             return "Unavailable"
-
+        print("getting the raw data")
         cleaned_data = process_data(raw_data, hashtag)
-
+        print("Got the clean data")
         # for row in cleaned_data:
         #     print(row)
 
-
+    print("not getting final data")
     final_data = extract_summary(cleaned_data, hashtag)
-
+    print("we got the final data")
     print("-" * 10)
 
 
     top_id = find_top(final_data, cleaned_data)
-
     print("-" * 10)
 
     print(top_id)

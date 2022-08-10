@@ -21,6 +21,7 @@ example use case:
 
 * Twitter API v1
 * Twitter API v2
+* Google Cloud Platform
 * Python, extract summary
 
 

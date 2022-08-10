@@ -3,7 +3,7 @@ file_url = ""
 from settings import production
 
 if production:
-    file_url = "/Users/seungjunlee/Downloads/GetMarketDataKeys.txt"
+    file_url = "/home/lsj3285007/WTBkeys.txt"
 else:
     file_url = "/Users/seungjunlee/Downloads/GetMarketDataKeys.txt"
 

@@ -46,15 +46,18 @@ class IDPrinter(twitter.StreamingClient):
 
 
 
-if __name__ == '__main__':
-    if settings.production:
-        printer = IDPrinter(keys.bearer_token)
+# if __name__ == '__main__':
+#     if settings.production:
+#         printer = IDPrinter(keys.bearer_token)
+#
+#         while True:
+#             try:
+#                 printer.filter()
+#             except:
+#                 continue
+#     else:
+#
+#         print(Brain.why_trending('iPhone 14'))
 
-        while True:
-            try:
-                printer.filter()
-            except:
-                continue
-    else:
 
-        print(Brain.why_trending('iPhone 14'))
+print(Twitter.get_top_tweets("Rivian"))

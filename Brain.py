@@ -3,11 +3,11 @@ import re
 import settings
 import Twitter
 from nltk.corpus import stopwords
-stop_words = stopwords.words('english') # why this is trending
+stop_words = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself', 'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', "that'll", 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', "don't", 'should', "should've", 'now', 'd', 'll', 'm', 'o', 're', 've', 'y', 'ain', 'aren', "aren't", 'couldn', "couldn't", 'didn', "didn't", 'doesn', "doesn't", 'hadn', "hadn't", 'hasn', "hasn't", 'haven', "haven't", 'isn', "isn't", 'ma', 'mightn', "mightn't", 'mustn', "mustn't", 'needn', "needn't", 'shan', "shan't", 'shouldn', "shouldn't", 'wasn', "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't"]
 
 def why_trending(hashtag):
     if settings.production == False and settings.use_example:
-        cleaned_data = settings.example_data3
+        cleaned_data = settings.example_data4
     else:
         raw_data = Twitter.get_top_tweets(hashtag)
 
@@ -25,10 +25,17 @@ def why_trending(hashtag):
     return f"This tweet might represent what people are talking about '{hashtag}' at this moment:\nhttps://twitter.com/twitter/status/{top_id}"
 
 def find_top(final_data, cleaned_data):
+    global_max = -1
+    top_id = 0
     for row in cleaned_data:
         for sentence in sent_tokenize(row['text']):
             if sentence in final_data:
                 row['score'] += final_data[sentence]
+                if row['score'] > global_max:
+                    top_id = row['tweet_id']
+                    global_max = row['score']
+                else:
+                    pass
             else:
                 print("This means this sentence is a useless")
                 print(f"**{sentence}**")
@@ -66,7 +73,7 @@ def extract_summary(data, hashtag):
             freqTable[word] = 1
 
     print(f"Total number of words: {len(words)} \n {words}")
-    print(f"The freqTable: \n {freqTable}" )
+    print(f"The freqTable: \n {sorted(freqTable.items(), key=lambda item: item[1], reverse=True)}" )
 
     # creating a dictionary to keep the score of each sentence
     sentences = []
@@ -143,8 +150,8 @@ def process_data(data, hashtag):
 
         scoreboard.append(curr)
 
-    print("cleaned_data: ")
-    print(scoreboard)
-    print("\n\n")
+    # print("cleaned_data: ")
+    # print(scoreboard)
+    # print("\n\n")
 
     return scoreboard

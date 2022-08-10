@@ -6,7 +6,6 @@ import settings
 import keys
 import tweepy as twitter
 
-
 auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
 auth.set_access_token(keys.oa_key, keys.oa_secret)
 api = twitter.API(auth)

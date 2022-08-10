@@ -11,7 +11,6 @@ auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
 auth.set_access_token(keys.oa_key, keys.oa_secret)
 api = twitter.API(auth)
 
-
 def reply(result, curr_id):
     api.update_status(status=result, in_reply_to_status_id=curr_id, auto_populate_reply_metadata=True)
     print("reply-tweeted! \n")

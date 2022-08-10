@@ -3,8 +3,8 @@ Help people to know instantly why certin topic is trending on Twitter
 
 # Important Links
 
-1. [Demo Video]
-2. [DevPost]
+1. [Demo Video]()
+2. [DevPost]()
 
 ## Problem Statement
 

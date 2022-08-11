@@ -2,32 +2,19 @@ from nltk.tokenize import word_tokenize, sent_tokenize
 import re
 import settings
 import Twitter
-from nltk.corpus import stopwords
 stop_words = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself', 'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', "that'll", 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', "don't", 'should', "should've", 'now', 'd', 'll', 'm', 'o', 're', 've', 'y', 'ain', 'aren', "aren't", 'couldn', "couldn't", 'didn', "didn't", 'doesn', "doesn't", 'hadn', "hadn't", 'hasn', "hasn't", 'haven', "haven't", 'isn', "isn't", 'ma', 'mightn', "mightn't", 'mustn', "mustn't", 'needn', "needn't", 'shan', "shan't", 'shouldn', "shouldn't", 'wasn', "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't"]
 
 def why_trending(hashtag):
     if settings.production == False and settings.use_example:
         cleaned_data = settings.example_data4
     else:
-        print("getting raw data")
         raw_data = Twitter.get_top_tweets(hashtag)
-        print("Got the raw data")
         if len(raw_data) == 0:
             return "Unavailable"
-        print("getting the raw data")
         cleaned_data = process_data(raw_data, hashtag)
-        print("Got the clean data")
-        # for row in cleaned_data:
-        #     print(row)
 
-    print("now getting final data")
     final_data = extract_summary(cleaned_data, hashtag)
-    print("we got the final data")
-    print("-" * 10)
-
-
     top_id = find_top(final_data, cleaned_data)
-    print("-" * 10)
 
     print(top_id)
     return f"This tweet might represent what people are talking about '{hashtag}' at this moment:\nhttps://twitter.com/twitter/status/{top_id}"
@@ -59,7 +46,6 @@ def extract_summary(data, hashtag):
     words = []
 
     seen_text = set()
-    print("District1")
     for row in data:
         curr_text = re.sub(r'[^(A-Za-z0-9 )]', '', row['text'])
         curr_text = re.sub(r'\(', '', curr_text)
@@ -70,7 +56,7 @@ def extract_summary(data, hashtag):
             seen_text.add(curr_text)
         else:
             pass
-    print("District2")
+
     # creating freqTable for every word in the given text, except stop words
     freqTable = dict()
     for word in words:
@@ -81,16 +67,13 @@ def extract_summary(data, hashtag):
         else:
             freqTable[word] = 1
 
-    print("District3")
     print(f"Total number of words: {len(words)} \n {words}")
     print(f"The freqTable: \n {sorted(freqTable.items(), key=lambda item: item[1], reverse=True)}" )
 
     # creating a dictionary to keep the score of each sentence
-    print("District4")
     sentences = []
     for row in data:
         curr = sent_tokenize(row['text'])
-
         for sub_curr in curr:
             if sub_curr not in sentences:
                 sentences += curr
@@ -101,7 +84,6 @@ def extract_summary(data, hashtag):
 
     # sort the freq table
     scoreboard=dict()
-    print("District5")
     ds = hashtag.split()
     dddd = []
     for d in ds:

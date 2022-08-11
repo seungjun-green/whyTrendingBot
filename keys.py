@@ -1,8 +1,8 @@
 file_url = ""
 
-from settings import production
+from settings import GCP_mode
 
-if production:
+if GCP_mode:
     file_url = "/home/lsj3285007/WTBkeys.txt"
 else:
     file_url = "/Users/seungjunlee/Downloads/GetMarketDataKeys.txt"

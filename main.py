@@ -34,8 +34,7 @@ class IDPrinter(twitter.StreamingClient):
                 print(result)
 
                 if settings.production:
-                    #Twitter.reply(result, curr_id)
-                    print("---")
+                    Twitter.reply(result, curr_id)
                 else:
                     print("tweeted - Development mode")
 
@@ -56,3 +55,4 @@ if __name__ == '__main__':
                 continue
     else:
         print(Brain.why_trending('iMessage'))
+

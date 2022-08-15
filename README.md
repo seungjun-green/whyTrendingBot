@@ -3,8 +3,9 @@ Help people to know instantly why certin topic is trending on Twitter
 
 # Important Links
 
-1. [Demo Video]()
-2. [DevPost]()
+1. [Demo Video](https://www.youtube.com/watch?v=fg9HeYrXIy4)
+2. [DevPost](https://devpost.com/software/why-tren...)
+3. [Twitter](https://twitter.com/whyTrendingBot)
 
 ## Problem Statement
 

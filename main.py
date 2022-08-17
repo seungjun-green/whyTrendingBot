@@ -46,6 +46,7 @@ class IDPrinter(twitter.StreamingClient):
 
 
 if __name__ == '__main__':
+    print("Start of the program")
     if settings.production:
         printer = IDPrinter(keys.bearer_token)
         while True:

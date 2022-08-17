@@ -16,7 +16,7 @@ def reply(result, curr_id):
     print("reply-tweeted! \n")
 
 def get_top_tweets(hashtag):
-    result = api.search_tweets(q=hashtag,tweet_mode='extended',lang = "en" ,count=10)
+    result = api.search_tweets(q=hashtag,tweet_mode='extended',lang = "en" ,count=100)
     return result
 
 
@@ -47,7 +47,7 @@ def construct_conv_order(tw_id):
         order += chat
         order += ' '
 
-    order = order.replace('@inshortBot', '')
+    order = order.replace('@whyTrendingBot', '')
 
     print("\n-------start of the order-------")
     print(order)

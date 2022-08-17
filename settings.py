@@ -1,11 +1,11 @@
 user_id = 'whyTrendingBot'
 
 # tells whether program is running on the GCP or on locl computer
-GCP_mode = False
+GCP_mode = True
 # Development mode or production mode, using produciton mode it won't actually tweet
-production = False
+production = True
 # use example data or scratch data using Twitter API
-use_example = True
+use_example = False
 
 example_data = [{'tweet_id': 1553073648793276421, 'text': 'Hand Painted Oil Painting On Canvas,Mountains ,', 'score': 0},
 {'tweet_id': 1553073498855133184, 'text': 'Initial game functions -MVP', 'score': 0},

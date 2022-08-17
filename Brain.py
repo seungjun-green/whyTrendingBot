@@ -89,7 +89,6 @@ def extract_summary(data, hashtag):
     for d in ds:
         dddd.append(d.lower())
 
-    print("District6")
     for sentence in sentences:
         for word, freq in freqTable.items():
             curr_text = re.sub(r'[^(A-Za-z0-9 )]', '', sentence)
@@ -102,7 +101,6 @@ def extract_summary(data, hashtag):
                     else:
                         scoreboard[sentence] = freq/highest_freq
 
-    print("District7")
     print(f"final data: \n {scoreboard}")
     print("\n\n")
 

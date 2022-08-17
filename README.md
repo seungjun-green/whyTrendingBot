@@ -13,7 +13,7 @@ You go to the 'Trends for you' and tap a word to know why this topic is trending
 
 ## Introducing  [whyTrendingBot](https://twitter.com/whytrendingbot)
 
-All you need to do is just mention @whyTrendingBot with a word or hahstag you're interted in. Then it will reply back with a tweet that represent what people are talking about the topic.
+Just mention @whyTrendingBot with a word or hahstag you're interted in. Then it will reply back with a tweet that represent what people are talking about the topic.
 
 example use case:
 
